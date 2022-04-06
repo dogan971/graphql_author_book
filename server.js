@@ -21,5 +21,5 @@ mongoose
   .then(() => console.log("MongoDB Connection Successfly"))
   .catch((err) => console.error(err));
 app.listen(PORT, () => {
-  console.log("Connection Success");
+  console.log("Connection Successfly");
 });
