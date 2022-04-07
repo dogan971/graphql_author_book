@@ -6,6 +6,7 @@ const {
   GraphQLID,
   GraphQLInt,
   GraphQLList,
+  GraphQLNonNull
 } = graphql;
 const Authors = require("../models/Authors");
 const Books = require("../models/Books");
@@ -17,9 +18,9 @@ const BookType = new GraphQLObjectType({
     name: { type: GraphQLString },
     genre: { type: GraphQLString },
     authorId: {
-      type: GraphQLString,
-      resolve(parent, args) {
-        return parent.authorId;
+      type: authorType,
+      async resolve(parent, args) {
+        return await Authors.findById(parent.authorId);
       },
     },
   }),
@@ -79,8 +80,8 @@ const Mutation = new GraphQLObjectType({
     addAuthor: {
       type: authorType,
       args: {
-        name: { type: GraphQLString },
-        age: { type: GraphQLInt },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) },
       },
       async resolve(parent, args) {
         let author = await Authors.create({
@@ -94,9 +95,9 @@ const Mutation = new GraphQLObjectType({
     addBook: {
       type: BookType,
       args: {
-        name: { type: GraphQLString },
-        genre: { type: GraphQLString },
-        authorId: { type: GraphQLID },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        genre: { type: new GraphQLNonNull(GraphQLString) },
+        authorId: { type: new GraphQLNonNull(GraphQLID) },
       },
       async resolve(parent, args) {
         const book = await Books.create({
