@@ -19,9 +19,7 @@ app.use(
 
 const PORT = process.env.PORT || 4000;
 mongoose
-  .connect(
-    "mongodb+srv://dgn123:dgn123@cluster0.a0t1y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-  )
+  .connect("URL_LINK")
   .then(() => console.log("MongoDB Connection Successfly"))
   .catch((err) => console.error(err));
 app.listen(PORT, () => {
